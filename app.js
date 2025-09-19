@@ -36,7 +36,7 @@ updateDisplay();
 //Let's get that API now!
 async function fetchData() {
 
-    const response = await fetch(`https://cookie-upgrade-api.vercel.app/api/upgrades`)
+    const response = await fetch(`https://custom-apis-beta.vercel.app/nina`)
    
    const data = await response.json ();
    
