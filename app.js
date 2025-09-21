@@ -22,6 +22,7 @@ function updateDisplay (){
 setInterval(function(){
     state.takoyakiCount= state.takoyakiCount + state.tps
     updateDisplay();
+    saveProgress();
 },1000)
 
 
@@ -29,6 +30,7 @@ setInterval(function(){
 takoyaki.addEventListener("click", ()=> {
     state.takoyakiCount++;
     updateDisplay();
+    saveProgress();
 
 });
 updateDisplay();
@@ -83,3 +85,17 @@ function purchaseUpgrade(upgrade) {
         alert("Ah ah ah! You don't have enough tako to yaki!");
     }
 }
+function saveProgress(){
+    localStorage.setItem("takoyakiState", JSON.stringify(state));
+}
+
+function loadGame(){
+const savedGame = localStorage.getItem("takoyakiState");
+if (savedGame){
+    Object.assign(state,JSON.parse(savedGame));
+    updateDisplay();
+}
+
+}
+
+loadGame();
