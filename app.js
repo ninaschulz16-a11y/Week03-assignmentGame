@@ -3,7 +3,8 @@ console.log("hello takoyaki lovers!");
 
 let state = {
     takoyakiCount: 0,
-    tps: 1
+    tps: 1,
+    purchasedUpgrades: []
 };
 
 function sum(a, b){
@@ -46,6 +47,7 @@ async function fetchData() {
 
    const stall = document.getElementById("stall");
 
+  
    data.forEach(upgrade => {
 
     const item = document.createElement("div");
@@ -62,8 +64,8 @@ async function fetchData() {
     button.innerText = "Buy";
 
     button.addEventListener("click", ()=> {
-        purchaseUpgrade(upgrade);
-    })
+        purchaseUpgrade(upgrade, button);
+    });
 
 item.append(button);
 stall.appendChild(item);
@@ -75,11 +77,23 @@ stall.appendChild(item);
 fetchData()
 
 
-function purchaseUpgrade(upgrade) {
+function purchaseUpgrade(upgrade, button) {
     if (state.takoyakiCount >= upgrade.cost) {
         state.takoyakiCount = sum(state.takoyakiCount, -upgrade.cost); 
         state.tps = sum(state.tps, upgrade.increase); 
-        updateDisplay();                     
+       
+    if(!state.purchasedUpgrades.includes(upgrade.id)) {
+        state.purchasedUpgrades.push(upgrade.id);
+    }
+     updateDisplay();   
+     saveProgress();
+
+     if (button){
+        button.disabled = true;
+        button.innerText = "Purchased";
+
+     }
+        
     } else 
         {
         alert("Ah ah ah! You don't have enough tako to yaki!");
